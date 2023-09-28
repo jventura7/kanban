@@ -1,14 +1,6 @@
-interface Task {
-  title: string;
-  description: string;
-  status: string;
-  subtasks: {
-    title: string;
-    isCompleted: boolean;
-  }[];
-}
+import { TaskType } from "@/util/interfaces";
 
-export default function Task({ task }: { task: Task }) {
+export default function Task({ task }: { task: TaskType }) {
   return (
     <div className="w-46 bg-nav-background group mb-6 cursor-pointer rounded-lg p-4">
       <h1 className="mb-2 font-bold group-hover:text-primary-blue">

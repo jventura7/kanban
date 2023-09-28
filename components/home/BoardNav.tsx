@@ -15,9 +15,38 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
+import { BoardsType, BoardType } from "@/util/interfaces";
+import { Dispatch, SetStateAction } from "react";
 
-export default function BoardNav() {
+export default function BoardNav({
+  boards,
+  currentBoard,
+  setCurrentBoard,
+}: {
+  boards: BoardsType;
+  currentBoard: BoardType | null;
+  setCurrentBoard: Dispatch<SetStateAction<BoardType | null>>;
+}) {
   const { theme, setTheme } = useTheme();
+
+  const handleChangeBoard = (newBoard: BoardType) => {
+    setCurrentBoard(newBoard);
+  };
+
+  const getAllBoards = () => {
+    if (!currentBoard) return [];
+
+    return boards.boards.map((board) => {
+      return (
+        <DropdownMenuItem
+          onClick={() => handleChangeBoard(board)}
+          className="cursor-pointer p-4 text-lg font-bold"
+        >
+          {board.name}
+        </DropdownMenuItem>
+      );
+    });
+  };
 
   return (
     <nav className="bg-nav-background flex justify-between p-6">
@@ -27,14 +56,15 @@ export default function BoardNav() {
         <div className="flex items-center space-x-2">
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center space-x-4 outline-none">
-              <h1 className="text-2xl font-bold ">Platform Launch</h1>
+              <h1 className="text-2xl font-bold ">{currentBoard?.name}</h1>
               <ChevronDwon />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="mt-8 w-64">
+            <DropdownMenuContent className="w-92 ml-16 mt-10">
               <DropdownMenuLabel className="p-4 tracking-widest text-primary-medium-grey">
                 ALL BOARDS
               </DropdownMenuLabel>
-              <div className="bg-main-background m-auto flex w-56 items-center justify-center space-x-4 rounded-lg p-2 py-3">
+              {getAllBoards()}
+              <div className="bg-main-background m-auto flex w-80 items-center justify-center space-x-4 rounded-lg p-2 py-3">
                 <LightIcon />
                 <Switch
                   checked={theme == "light" ? false : true}

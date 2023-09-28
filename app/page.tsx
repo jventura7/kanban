@@ -10,13 +10,12 @@ export default function Home() {
   const [currentBoard, setCurrentBoard] = useState(
     BoardData.boards.length > 0 ? BoardData.boards[0] : null,
   );
-  console.log(currentBoard);
 
   const getColumnsForBoard = () => {
     if (!currentBoard?.columns) return [];
 
     return currentBoard.columns.map((column) => (
-      <div key={column.name} className="min-w-[300px]">
+      <div key={column.name} className="min-w-[300px] max-w-[300px]">
         <h1 className="mb-8 text-sm font-bold tracking-wider text-primary-medium-grey">
           {`${column.name} (${column.tasks.length})`}
         </h1>
@@ -31,7 +30,11 @@ export default function Home() {
 
   return (
     <main className="bg-main-background min-h-screen">
-      <BoardNav />
+      <BoardNav
+        boards={taskBoard}
+        currentBoard={currentBoard}
+        setCurrentBoard={setCurrentBoard}
+      />
       {currentBoard?.columns.length == 0 ? (
         <div className="mx-20 mt-60 text-center">
           <h1 className="mb-6 text-xl font-bold">
@@ -40,7 +43,7 @@ export default function Home() {
           <Button className="transition duration-200">+ Add New Column</Button>
         </div>
       ) : (
-        <div className="no-scrollbar flex w-full space-x-20 overflow-scroll p-10">
+        <div className="no-scrollbar flex w-full space-x-8 overflow-scroll p-10">
           {columns}
         </div>
       )}
