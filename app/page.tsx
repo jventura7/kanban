@@ -1,5 +1,6 @@
 "use client";
-import BoardNav from "@/components/home/BoardNav";
+import BoardHeader from "@/components/home/BoardHeader";
+import SideBar from "@/components/home/SideBar";
 import Task from "@/components/home/Task";
 import { Button } from "@/components/ui/button";
 import BoardData from "@/data.json";
@@ -20,7 +21,7 @@ export default function Home() {
           {`${column.name} (${column.tasks.length})`}
         </h1>
         {column.tasks.map((task) => (
-          <Task task={task} />
+          <Task key={task.title} task={task} />
         ))}
       </div>
     ));
@@ -30,7 +31,7 @@ export default function Home() {
 
   return (
     <main className="bg-main-background min-h-screen">
-      <BoardNav
+      <BoardHeader
         boards={taskBoard}
         currentBoard={currentBoard}
         setCurrentBoard={setCurrentBoard}
@@ -43,8 +44,16 @@ export default function Home() {
           <Button className="transition duration-200">+ Add New Column</Button>
         </div>
       ) : (
-        <div className="no-scrollbar flex w-full space-x-8 overflow-scroll p-10">
-          {columns}
+        <div className="min-h-[var(--main-height)] md:grid md:grid-cols-[260px_minmax(900px,_1fr)]">
+          {/* Sidebar */}
+          <SideBar
+            boards={taskBoard}
+            currentBoard={currentBoard}
+            setCurrentBoard={setCurrentBoard}
+          />
+          <div className="no-scrollbar flex max-h-[var(--main-height)] w-full space-x-8 overflow-scroll overflow-y-auto p-10">
+            {columns}
+          </div>
         </div>
       )}
     </main>

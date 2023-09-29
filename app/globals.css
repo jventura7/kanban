@@ -49,6 +49,10 @@
     --main-background: var(--secondary-medium-grey);
 
     --radius: 0.5rem;
+    --header-height: 80px;
+    --main-height: calc(100vh - var(--header-height));
+
+    --hide-sidebar-hover: #eaeaf7;
   }
 
   .dark {
@@ -81,6 +85,8 @@
 
     --nav-background: var(--secondary-black);
     --main-background: var(--primary-black);
+
+    --hide-sidebar-hover: #ffffff;
   }
 }
 
