@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { BoardType, BoardsType } from "./interfaces";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 export const renderAllBoards = (
   boards: BoardsType,
@@ -13,20 +14,24 @@ export const renderAllBoards = (
     <>
       {boards.boards.map((board) =>
         asMenuItem ? (
-          <DropdownMenuItem
-            key={board.name}
-            onClick={() => setCurrentBoard(board)}
-            className="cursor-pointer p-4 text-lg font-bold"
-          >
-            {board.name}
-          </DropdownMenuItem>
+          <div className="mb-2 w-full pr-8">
+            <DropdownMenuItem
+              key={board.name}
+              onClick={() => setCurrentBoard(board)}
+              className="hover:bg-item-hover cursor-pointer rounded-r-full p-4 text-lg font-bold hover:text-primary-blue"
+            >
+              {board.name}
+            </DropdownMenuItem>
+          </div>
         ) : (
-          <div
-            key={board.name}
-            onClick={() => setCurrentBoard(board)}
-            className="cursor-pointer p-4 text-lg font-bold"
-          >
-            {board.name}
+          <div className="mb-2 w-full pr-8">
+            <Button
+              key={board.name}
+              onClick={() => setCurrentBoard(board)}
+              className="bg-nav-background hover:bg-item-hover flex w-full items-center justify-start rounded-r-full py-7 pl-6 text-xl font-bold text-primary-medium-grey hover:text-primary-blue hover:opacity-100"
+            >
+              {board.name}
+            </Button>
           </div>
         ),
       )}

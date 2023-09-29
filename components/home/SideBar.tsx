@@ -27,10 +27,12 @@ export default function SideBar({
         <div className="p-6">
           <ThemeSwitch customWidth="100%" />
         </div>
-        <Button className="bg-nav-background mb-6 flex w-full items-center justify-start rounded-r-full py-7 pl-6 font-bold text-primary-medium-grey hover:bg-[var(--hide-sidebar-hover)] hover:text-primary-blue hover:opacity-100">
-          <HideIcon />
-          <span className="ml-2 text-lg">Hide Sidebar</span>
-        </Button>
+        <div className="w-full pr-8">
+          <Button className="bg-nav-background hover:bg-item-hover mb-6 flex w-full items-center justify-start rounded-r-full py-7 pl-6 font-bold text-primary-medium-grey hover:text-primary-blue hover:opacity-100">
+            <HideIcon />
+            <span className="ml-2 text-lg">Hide Sidebar</span>
+          </Button>
+        </div>
       </div>
     </div>
   );
