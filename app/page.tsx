@@ -1,9 +1,9 @@
 "use client";
-import BoardHeader from "@/components/home/BoardHeader";
+import BoardHeader from "@/components/home/board/BoardHeader";
 import SideBar from "@/components/home/SideBar";
 import BoardData from "@/data.json";
 import { useState } from "react";
-import Board from "@/components/home/Board";
+import Board from "@/components/home/board/Board";
 
 export default function Home() {
   const [taskBoard, setTaskBoard] = useState(BoardData);

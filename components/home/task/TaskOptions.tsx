@@ -4,7 +4,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import Ellipsis from "@/public/assets/icon-vertical-ellipsis.svg";
 import { TaskType } from "@/util/interfaces";
 
@@ -18,14 +23,16 @@ export default function TaskOptions({ task }: { task: TaskType }) {
       <DropdownMenuContent className="mt-2 flex flex-col space-y-4 p-4">
         <Dialog>
           <DialogTrigger>Edit Task</DialogTrigger>
-          <DialogContent>Edit task content</DialogContent>
+          <DialogContent>
+            <DialogTitle>Edit Task Content</DialogTitle>
+          </DialogContent>
         </Dialog>
         <Dialog>
           <DialogTrigger className="text-red-500">Delete Task</DialogTrigger>
           <DialogContent className="flex flex-col space-y-4">
-            <h1 className="text-xl font-bold text-red-500">
+            <DialogTitle className="dialog-content-header text-red-500">
               Delete this task?
-            </h1>
+            </DialogTitle>
             <p>
               Are you sure you want to delete the "{task.title}" task and its
               subtasks? This action cannot be reversed.

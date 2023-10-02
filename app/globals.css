@@ -115,3 +115,9 @@
     background-color: var(--item-hover);
   }
 }
+
+@layer components {
+  .dialog-content-header {
+    @apply mb-4 text-xl font-bold;
+  }
+}

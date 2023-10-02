@@ -4,11 +4,9 @@ import DesktopDarkIcon from "@/public/assets/logo-light.svg";
 import DesktopLightIcon from "@/public/assets/logo-dark.svg";
 import ChevronDwon from "@/public/assets/icon-chevron-down.svg";
 import Ellipsis from "@/public/assets/icon-vertical-ellipsis.svg";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -17,7 +15,8 @@ import { useTheme } from "next-themes";
 import { Dispatch, SetStateAction } from "react";
 import { BoardsType, BoardType } from "@/util/interfaces";
 import { renderAllBoards } from "@/util/helper";
-import ThemeSwitch from "./ThemeSwitch";
+import ThemeSwitch from "../ThemeSwitch";
+import AddNewTask from "../task/AddNewTask";
 
 export default function BoardHeader({
   boards,
@@ -62,15 +61,7 @@ export default function BoardHeader({
       </div>
       {/* Button container */}
       <div className="flex items-center space-x-4">
-        <Button
-          size={"lg"}
-          className="rounded-full text-xl font-bold transition duration-200"
-        >
-          <h1 className="md:hidden">+</h1>
-          <h1 className="hidden text-sm font-extrabold md:inline">
-            + Add New Task
-          </h1>
-        </Button>
+        <AddNewTask />
         <Ellipsis />
       </div>
     </nav>

@@ -71,7 +71,7 @@ export default function Task({
       </DialogTrigger>
       <DialogContent className="bg-nav-background w-96 p-8">
         <DialogHeader>
-          <DialogTitle className="mb-6 flex items-center justify-between text-xl font-bold">
+          <DialogTitle className="dialog-content-header flex items-center justify-between">
             {task.title}
             <TaskOptions task={task} />
           </DialogTitle>

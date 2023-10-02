@@ -1,5 +1,5 @@
 import { BoardType } from "@/util/interfaces";
-import Task from "./task/Task";
+import Task from "../task/Task";
 import {
   Dialog,
   DialogContent,
@@ -7,9 +7,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Label } from "../../ui/label";
+import { Input } from "../../ui/input";
+import { Button } from "../../ui/button";
 
 export default function Board({
   currentBoard,
@@ -37,7 +37,9 @@ export default function Board({
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="mb-6 text-xl">Edit Board</DialogTitle>
+            <DialogTitle className="dialog-content-header">
+              Edit Board
+            </DialogTitle>
           </DialogHeader>
           <Label htmlFor="board-name">Board Name</Label>
           <Input id="board-name" />
@@ -53,7 +55,6 @@ export default function Board({
         </DialogContent>
       </Dialog>,
     );
-
     return columns;
   };
 
