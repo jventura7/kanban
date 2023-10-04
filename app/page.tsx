@@ -10,7 +10,7 @@ export default function Home() {
   const [currentBoard, setCurrentBoard] = useState(
     BoardData.boards.length > 0 ? BoardData.boards[0] : null,
   );
-
+  console.log(taskBoard);
   return (
     <main className="bg-main-background min-h-screen">
       <BoardHeader
