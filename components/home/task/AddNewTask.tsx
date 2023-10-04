@@ -13,7 +13,7 @@ import { BoardType } from "@/util/interfaces";
 export default function AddNewTask({
   currentBoard,
 }: {
-  currentBoard: BoardType;
+  currentBoard: BoardType | null;
 }) {
   return (
     <Dialog>

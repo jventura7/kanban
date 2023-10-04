@@ -35,14 +35,17 @@ export default function Board({
         <DialogTrigger className="bg-nav-background mt-[52px] min-w-[300px] max-w-[300px] rounded-xl p-10 text-2xl font-bold opacity-40 transition duration-300 hover:text-primary-blue hover:opacity-100">
           + New Column
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className="bg-nav-background">
           <DialogHeader>
             <DialogTitle className="dialog-content-header">
               Edit Board
             </DialogTitle>
           </DialogHeader>
           <Label htmlFor="board-name">Board Name</Label>
-          <Input id="board-name" />
+          <Input
+            id="board-name"
+            className="bg-nav-background border-primary-medium-grey"
+          />
           <div className="mt-4 flex flex-col space-y-4">
             <Label htmlFor="board-columns">Board Columns</Label>
             <Button className="rounded-full bg-[var(--secondary-medium-grey)] font-bold text-primary-blue transition duration-200">

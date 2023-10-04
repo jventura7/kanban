@@ -17,6 +17,8 @@ import { BoardsType, BoardType } from "@/util/interfaces";
 import { renderAllBoards } from "@/util/helper";
 import ThemeSwitch from "../ThemeSwitch";
 import AddNewTask from "../task/AddNewTask";
+import { Dialog } from "@/components/ui/dialog";
+import BoardOptions from "./BoardOptions";
 
 export default function BoardHeader({
   boards,
@@ -61,8 +63,8 @@ export default function BoardHeader({
       </div>
       {/* Button container */}
       <div className="flex items-center space-x-4">
-        <AddNewTask />
-        <Ellipsis />
+        <AddNewTask currentBoard={currentBoard} />
+        <BoardOptions currentBoard={currentBoard} />
       </div>
     </nav>
   );
