@@ -8,11 +8,9 @@ import { Button } from "../ui/button";
 export default function SideBar({
   boards,
   currentBoard,
-  setCurrentBoard,
 }: {
-  boards: BoardsType;
+  boards: BoardsType | null;
   currentBoard: BoardType | null;
-  setCurrentBoard: Dispatch<SetStateAction<BoardType | null>>;
 }) {
   return (
     <div className="bg-nav-background hidden md:flex md:flex-col md:justify-between">
@@ -21,7 +19,7 @@ export default function SideBar({
           {" "}
           ALL BOARDS ({boards?.boards.length})
         </h1>
-        {renderAllBoards(boards, setCurrentBoard, false)}
+        {renderAllBoards(boards, false)}
       </div>
       <div>
         <div className="p-6">

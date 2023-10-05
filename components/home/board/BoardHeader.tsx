@@ -12,22 +12,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
-import { Dispatch, SetStateAction } from "react";
 import { BoardsType, BoardType } from "@/util/interfaces";
 import { renderAllBoards } from "@/util/helper";
 import ThemeSwitch from "../ThemeSwitch";
 import AddNewTask from "../task/AddNewTask";
-import { Dialog } from "@/components/ui/dialog";
 import BoardOptions from "./BoardOptions";
 
 export default function BoardHeader({
   boards,
   currentBoard,
-  setCurrentBoard,
 }: {
-  boards: BoardsType;
+  boards: BoardsType | null;
   currentBoard: BoardType | null;
-  setCurrentBoard: Dispatch<SetStateAction<BoardType | null>>;
 }) {
   const { theme, setTheme } = useTheme();
 
@@ -52,7 +48,7 @@ export default function BoardHeader({
               <DropdownMenuLabel className="p-4 font-bold tracking-widest text-primary-medium-grey">
                 ALL BOARDS ({boards?.boards.length})
               </DropdownMenuLabel>
-              {renderAllBoards(boards, setCurrentBoard, true)}
+              {renderAllBoards(boards, true)}
               <DropdownMenuSeparator />
               <div className="p-6">
                 <ThemeSwitch customWidth="80%" />

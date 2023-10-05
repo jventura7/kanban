@@ -44,7 +44,7 @@ export default function Board({
           <Label htmlFor="board-name">Board Name</Label>
           <Input
             id="board-name"
-            className="bg-nav-background border-primary-medium-grey"
+            className="bg-nav-background border-primary-medium-grey "
           />
           <div className="mt-4 flex flex-col space-y-4">
             <Label htmlFor="board-columns">Board Columns</Label>
@@ -62,10 +62,10 @@ export default function Board({
   };
 
   const columns = getColumnsForBoard();
-
+  console.log(currentBoard);
   return (
     <>
-      {currentBoard?.columns.length == 0 ? (
+      {!currentBoard ? (
         <div className="mx-20 mt-60 text-center">
           <h1 className="mb-6 text-xl font-bold">
             This board is empty. Create a new column to get started

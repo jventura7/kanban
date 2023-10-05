@@ -20,7 +20,7 @@ export default function AddNewTask({
       <DialogTrigger className="rounded-full bg-primary-blue p-4 py-3 font-bold text-white ">
         + Add New Task
       </DialogTrigger>
-      <DialogContent className="w-96 p-8">
+      <DialogContent className="bg-nav-background w-96 p-8">
         <DialogTitle className="dialog-content-header ">
           Add New Task
         </DialogTitle>
@@ -28,7 +28,7 @@ export default function AddNewTask({
           <div>
             <Label htmlFor="task-name">Task Name</Label>
             <Input
-              className="mt-3"
+              className="bg-nav-background mt-3 border-primary-medium-grey"
               id="task-name"
               placeholder="e.g. Take coffee break"
             />
@@ -38,7 +38,7 @@ export default function AddNewTask({
               Description
             </Label>
             <Textarea
-              className="mt-3"
+              className="bg-nav-background mt-3 border-primary-medium-grey"
               id="task-name"
               placeholder="e.g. It's always a good to take a break. This 15 minute break will recharge the batteries a little."
             />

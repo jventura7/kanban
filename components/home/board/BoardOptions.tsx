@@ -12,12 +12,19 @@ import {
 } from "@/components/ui/dialog";
 import Ellipsis from "@/public/assets/icon-vertical-ellipsis.svg";
 import { BoardType, TaskType } from "@/util/interfaces";
+import { useStore } from "@/util/store";
 
 export default function BoardOptions({
   currentBoard,
 }: {
   currentBoard: BoardType | null;
 }) {
+  const store = useStore();
+  const handleDeleteBoard = () => {
+    store.setBoardToDelete(currentBoard);
+    store.deleteBoard();
+  };
+
   return (
     <DropdownMenu>
       {/* Options (Edit or Delete) */}

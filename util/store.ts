@@ -27,30 +27,46 @@ const deleteBoard = (
 
 type Store = {
   boards: BoardsType | null;
+  currentBoard: BoardType | null;
   newBoard: BoardType | null;
   boardToDelete: BoardType | null;
   addBoard: () => void;
   deleteBoard: () => void;
-  setBoardToDelete: (board: BoardType) => void;
+  setBoardToDelete: (board: BoardType | null) => void;
+  setCurrentBoard: (board: BoardType | null) => void;
+  setBoards: (boards: BoardsType | null) => void;
 };
 
-const useStore = create<Store>((set) => ({
+export const useStore = create<Store>((set) => ({
   boards: null,
   newBoard: null,
   boardToDelete: null,
+  currentBoard: null,
   addBoard: () =>
     set((state) => ({
       ...state,
       boards: addBoard(state.boards, state.newBoard),
     })),
+
   deleteBoard: () =>
     set((state) => ({
       ...state,
       boards: deleteBoard(state.boards, state.boardToDelete),
     })),
-  setBoardToDelete: (board: BoardType) =>
+  setBoardToDelete: (board: BoardType | null) =>
     set((state) => ({
       ...state,
       boardToDelete: board,
+    })),
+  setCurrentBoard: (board: BoardType | null) =>
+    set((state) => ({
+      ...state,
+      currentBoard: board,
+    })),
+  setBoards: (boards: BoardsType | null) =>
+    set((state) => ({
+      ...state,
+      boards: boards,
+      currentBoard: boards?.boards[0],
     })),
 }));
