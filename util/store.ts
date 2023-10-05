@@ -5,8 +5,7 @@ const addBoard = (
   boards: BoardsType | null,
   newBoard: BoardType | null,
 ): BoardsType | null => {
-  if (!newBoard) return boards;
-  if (!boards) return null;
+  if (!newBoard || !boards) return boards;
 
   const newBoards = { ...boards };
   newBoards.boards.push(newBoard);
@@ -17,11 +16,13 @@ const deleteBoard = (
   boards: BoardsType | null,
   boardToDelete: BoardType | null,
 ): BoardsType | null => {
-  if (!boardToDelete) return boards;
-  if (!boards) return null;
+  if (!boardToDelete || !boards) return boards;
 
-  const newBoards = { ...boards };
-  newBoards.boards.filter((boards) => boards.name != boardToDelete.name);
+  const newBoards = {
+    ...boards,
+    boards: boards.boards.filter((board) => board.name != boardToDelete.name),
+  };
+
   return newBoards;
 };
 
@@ -29,10 +30,8 @@ type Store = {
   boards: BoardsType | null;
   currentBoard: BoardType | null;
   newBoard: BoardType | null;
-  boardToDelete: BoardType | null;
   addBoard: () => void;
-  deleteBoard: () => void;
-  setBoardToDelete: (board: BoardType | null) => void;
+  deleteBoard: (boardToDelete: BoardType | null) => void;
   setCurrentBoard: (board: BoardType | null) => void;
   setBoards: (boards: BoardsType | null) => void;
 };
@@ -40,23 +39,17 @@ type Store = {
 export const useStore = create<Store>((set) => ({
   boards: null,
   newBoard: null,
-  boardToDelete: null,
   currentBoard: null,
   addBoard: () =>
     set((state) => ({
       ...state,
       boards: addBoard(state.boards, state.newBoard),
     })),
-
-  deleteBoard: () =>
+  deleteBoard: (boardToDelete: BoardType | null) =>
     set((state) => ({
       ...state,
-      boards: deleteBoard(state.boards, state.boardToDelete),
-    })),
-  setBoardToDelete: (board: BoardType | null) =>
-    set((state) => ({
-      ...state,
-      boardToDelete: board,
+      boards: deleteBoard(state.boards, boardToDelete),
+      currentBoard: state.boards?.boards[0],
     })),
   setCurrentBoard: (board: BoardType | null) =>
     set((state) => ({

@@ -1,3 +1,4 @@
+"use client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,16 +14,19 @@ import {
 import Ellipsis from "@/public/assets/icon-vertical-ellipsis.svg";
 import { BoardType, TaskType } from "@/util/interfaces";
 import { useStore } from "@/util/store";
+import { useState } from "react";
 
 export default function BoardOptions({
   currentBoard,
 }: {
   currentBoard: BoardType | null;
 }) {
+  const [open, setOpen] = useState(false);
   const store = useStore();
+
   const handleDeleteBoard = () => {
-    store.setBoardToDelete(currentBoard);
-    store.deleteBoard();
+    store.deleteBoard(currentBoard);
+    setOpen(false);
   };
 
   return (
@@ -38,7 +42,7 @@ export default function BoardOptions({
             <DialogTitle>Edit board content</DialogTitle>
           </DialogContent>
         </Dialog>
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger className="text-red-500">Delete board</DialogTrigger>
           <DialogContent className="bg-nav-background flex flex-col space-y-4">
             <DialogTitle className="dialog-content-header text-red-500">
@@ -49,7 +53,10 @@ export default function BoardOptions({
               and its subtasks? This action cannot be reversed.
             </p>
             <div className="flex w-full space-x-4">
-              <Button className="w-full rounded-full bg-red-500 font-bold transition duration-200">
+              <Button
+                onClick={handleDeleteBoard}
+                className="w-full rounded-full bg-red-500 font-bold transition duration-200"
+              >
                 Delete
               </Button>
               <Button className="w-full rounded-full bg-[var(--item-hover)] font-bold text-primary-blue transition duration-200">
