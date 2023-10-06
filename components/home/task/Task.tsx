@@ -30,7 +30,10 @@ export default function Task({
 
   const renderSubtasks = () => {
     return task.subtasks.map((subtask) => (
-      <div className="bg-main-background flex w-full items-center  space-x-3 rounded-lg p-6 transition duration-200 hover:bg-secondary-blue hover:bg-opacity-100">
+      <div
+        key={subtask.title}
+        className="bg-main-background flex w-full items-center  space-x-3 rounded-lg p-6 transition duration-200 hover:bg-secondary-blue hover:bg-opacity-100"
+      >
         <Checkbox id={subtask.title} />
         <label
           htmlFor={subtask.title}
@@ -52,7 +55,9 @@ export default function Task({
         </SelectTrigger>
         <SelectContent>
           {currentBoard.columns.map((column) => (
-            <SelectItem value={column.name}>{column.name}</SelectItem>
+            <SelectItem key={column.name} value={column.name}>
+              {column.name}
+            </SelectItem>
           ))}
         </SelectContent>
       </Select>

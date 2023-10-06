@@ -1,6 +1,5 @@
 import HideIcon from "@/public/assets/icon-hide-sidebar.svg";
 import { BoardsType, BoardType } from "@/util/interfaces";
-import { Dispatch, SetStateAction } from "react";
 import { renderAllBoards } from "@/util/helper";
 import ThemeSwitch from "./ThemeSwitch";
 import { Button } from "../ui/button";
@@ -19,7 +18,7 @@ export default function SideBar({
           {" "}
           ALL BOARDS ({boards?.boards.length})
         </h1>
-        {renderAllBoards(boards, false)}
+        {renderAllBoards(boards, false, "-sidebar")}
       </div>
       <div>
         <div className="p-6">

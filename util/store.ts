@@ -15,15 +15,19 @@ const addBoard = (
 const deleteBoard = (
   boards: BoardsType | null,
   boardToDelete: BoardType | null,
-): BoardsType | null => {
-  if (!boardToDelete || !boards) return boards;
+): { success: boolean; updatedBoards: BoardsType | null } => {
+  if (!boardToDelete || !boards) {
+    return { success: false, updatedBoards: boards };
+  }
 
-  const newBoards = {
-    ...boards,
-    boards: boards.boards.filter((board) => board.name != boardToDelete.name),
+  const filteredBoards = boards.boards.filter(
+    (board) => board.name !== boardToDelete.name,
+  );
+
+  return {
+    success: filteredBoards.length !== boards.boards.length,
+    updatedBoards: { ...boards, boards: filteredBoards },
   };
-
-  return newBoards;
 };
 
 type Store = {
@@ -46,11 +50,17 @@ export const useStore = create<Store>((set) => ({
       boards: addBoard(state.boards, state.newBoard),
     })),
   deleteBoard: (boardToDelete: BoardType | null) =>
-    set((state) => ({
-      ...state,
-      boards: deleteBoard(state.boards, boardToDelete),
-      currentBoard: state.boards?.boards[0],
-    })),
+    set((state) => {
+      const { success, updatedBoards } = deleteBoard(
+        state.boards,
+        boardToDelete,
+      );
+      return {
+        ...state,
+        boards: updatedBoards,
+        currentBoard: success ? updatedBoards?.boards[0] : state.currentBoard,
+      };
+    }),
   setCurrentBoard: (board: BoardType | null) =>
     set((state) => ({
       ...state,

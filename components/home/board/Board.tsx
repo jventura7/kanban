@@ -20,7 +20,10 @@ export default function Board({
     if (!currentBoard?.columns) return [];
 
     const columns = currentBoard.columns.map((column) => (
-      <div key={column.name} className="min-w-[300px] max-w-[300px]">
+      <div
+        key={column.name + "current_board"}
+        className="min-w-[300px] max-w-[300px]"
+      >
         <h1 className="mb-8 text-sm font-bold tracking-wider text-primary-medium-grey">
           {`${column.name} (${column.tasks.length})`}
         </h1>
@@ -44,7 +47,7 @@ export default function Board({
           <Label htmlFor="board-name">Board Name</Label>
           <Input
             id="board-name"
-            className="bg-nav-background border-primary-medium-grey "
+            className="bg-nav-background border-primary-medium-grey"
           />
           <div className="mt-4 flex flex-col space-y-4">
             <Label htmlFor="board-columns">Board Columns</Label>

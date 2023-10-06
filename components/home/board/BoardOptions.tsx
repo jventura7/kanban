@@ -46,10 +46,10 @@ export default function BoardOptions({
           <DialogTrigger className="text-red-500">Delete board</DialogTrigger>
           <DialogContent className="bg-nav-background flex flex-col space-y-4">
             <DialogTitle className="dialog-content-header text-red-500">
-              Delete this task?
+              Delete this board?
             </DialogTitle>
             <p>
-              Are you sure you want to delete the "{currentBoard?.name}" task
+              Are you sure you want to delete the "{currentBoard?.name}" board
               and its subtasks? This action cannot be reversed.
             </p>
             <div className="flex w-full space-x-4">

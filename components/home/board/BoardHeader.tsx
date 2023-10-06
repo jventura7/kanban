@@ -25,7 +25,7 @@ export default function BoardHeader({
   boards: BoardsType | null;
   currentBoard: BoardType | null;
 }) {
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <nav className="bg-nav-background box-border flex max-h-[var(--header-height)] min-h-[var(--header-height)] justify-between p-6">
@@ -48,7 +48,7 @@ export default function BoardHeader({
               <DropdownMenuLabel className="p-4 font-bold tracking-widest text-primary-medium-grey">
                 ALL BOARDS ({boards?.boards.length})
               </DropdownMenuLabel>
-              {renderAllBoards(boards, true)}
+              {renderAllBoards(boards, true, "-header")}
               <DropdownMenuSeparator />
               <div className="p-6">
                 <ThemeSwitch customWidth="80%" />
