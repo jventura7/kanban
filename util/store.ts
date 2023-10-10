@@ -44,7 +44,6 @@ const updateBoard = (
       board.name === oldName ? boardToUpdate : board,
     ),
   };
-  console.log(newBoards, boardToUpdate);
 
   return newBoards;
 };

@@ -14,30 +14,31 @@ import {
 import Ellipsis from "@/public/assets/icon-vertical-ellipsis.svg";
 import { useStore } from "@/util/store";
 import { useState } from "react";
+import EditBoard from "./EditBoard";
 
 export default function BoardOptions() {
-  const [open, setOpen] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
   const { deleteBoard, currentBoard } = useStore();
 
   const handleDeleteBoard = () => {
     deleteBoard(currentBoard);
-    setOpen(false);
+    setOpenDelete(false);
   };
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={openMenu} onOpenChange={setOpenMenu}>
       {/* Options (Edit or Delete) */}
       <DropdownMenuTrigger>
         <Ellipsis />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-nav-background mr-4 mt-8 flex flex-col space-y-4 p-4">
-        <Dialog>
+        <Dialog open={openEdit} onOpenChange={setOpenEdit}>
           <DialogTrigger>Edit board</DialogTrigger>
-          <DialogContent>
-            <DialogTitle>Edit board content</DialogTitle>
-          </DialogContent>
+          <EditBoard setOpenEdit={setOpenEdit} />
         </Dialog>
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog open={openDelete} onOpenChange={setOpenDelete}>
           <DialogTrigger className="text-red-500">Delete board</DialogTrigger>
           <DialogContent className="bg-nav-background flex flex-col space-y-4">
             <DialogTitle className="dialog-content-header text-red-500">

@@ -22,22 +22,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import CrossIcon from "@/public/assets/icon-cross.svg";
 import { useStore } from "@/util/store";
 import { BoardType } from "@/util/interfaces";
+import { boardSchema } from "@/util/schema";
 
 export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
   const { addBoard, setCurrentBoard } = useStore();
-
-  const columnSchema = z.object({
-    name: z.string().min(1, {
-      message: "Column name cannot be empty",
-    }),
-  });
-
-  const boardSchema = z.object({
-    name: z.string().min(1, {
-      message: "Board name cannot be empty",
-    }),
-    columns: z.array(columnSchema),
-  });
 
   const form = useForm<z.infer<typeof boardSchema>>({
     resolver: zodResolver(boardSchema),

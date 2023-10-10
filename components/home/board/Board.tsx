@@ -1,11 +1,13 @@
-import { BoardType } from "@/util/interfaces";
 import Task from "../task/Task";
 import { Button } from "../../ui/button";
-import EditBoard from "./EditBoard";
 import { useStore } from "@/util/store";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { useState } from "react";
+import EditBoard from "./EditBoard";
 
 export default function Board() {
   const { currentBoard } = useStore();
+  const [open, setOpen] = useState(false);
 
   const getColumnsForBoard = () => {
     if (!currentBoard?.columns) return [];
@@ -22,11 +24,17 @@ export default function Board() {
       </div>
     ));
 
-    columns.push(<EditBoard />);
+    columns.push(
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger className="bg-nav-background mt-[52px] min-w-[300px] max-w-[300px] rounded-xl p-10 text-2xl font-bold opacity-40 transition duration-300 hover:text-primary-blue hover:opacity-100">
+          + New Column
+        </DialogTrigger>
+        <EditBoard setOpenEdit={setOpen} />
+      </Dialog>,
+    );
     return columns;
   };
 
-  const columns = getColumnsForBoard();
   return (
     <>
       {currentBoard?.columns.length === 0 ? (
@@ -40,7 +48,7 @@ export default function Board() {
         </div>
       ) : (
         <div className="no-scrollbar flex max-h-[var(--main-height)] w-full space-x-8 overflow-scroll overflow-y-auto p-10">
-          {columns}
+          {getColumnsForBoard()}
         </div>
       )}
     </>

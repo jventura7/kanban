@@ -1,7 +1,7 @@
 export interface BoardsType {
   boards: {
     name: string;
-    columns: {
+    columns?: {
       name: string;
       tasks?: {
         title: string;
@@ -18,7 +18,7 @@ export interface BoardsType {
 
 export interface BoardType {
   name: string;
-  columns: {
+  columns?: {
     name: string;
     tasks?: {
       title: string;
