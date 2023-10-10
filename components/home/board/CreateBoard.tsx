@@ -24,21 +24,19 @@ import { useEffect, useState } from "react";
 import CrossIcon from "@/public/assets/icon-cross.svg";
 
 export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
-  // const [columns, setColumns] = useState<string[]>(["Todo", "Done"]);
+  const columnSchema = z.object({
+    value: z.string(),
+  });
 
   const boardSchema = z.object({
     name: z.string().min(1, {
       message: "Board name cannot be empty",
     }),
-    columns: z.array(z.string()),
+    columns: z.array(columnSchema),
   });
 
   const form = useForm<z.infer<typeof boardSchema>>({
     resolver: zodResolver(boardSchema),
-    defaultValues: {
-      name: "",
-      columns: [],
-    },
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -98,37 +96,11 @@ export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
               )}
             />
             <Label>Columns</Label>
-            {/* {columns.map((column, index) => (
-              <FormField
-                key={index}
-                control={form.control}
-                name={`columns.${index}`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <div className="flex space-x-4">
-                        <Input
-                          className="bg-nav-background border-primary-medium-grey"
-                          {...field}
-                        />
-                        <Button
-                          type="button"
-                          onClick={() => removeColumn(index)}
-                          className="bg-nav-background p-0"
-                        >
-                          <CrossIcon />
-                        </Button>
-                      </div>
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
-            ))} */}
             {fields.map((item, index) => {
               return (
                 <FormField
                   key={item.id}
+                  control={form.control}
                   name={`columns.${index}.value`}
                   render={({ field }) => (
                     <FormItem>
