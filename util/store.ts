@@ -34,16 +34,17 @@ const deleteBoard = (
 const updateBoard = (
   boards: BoardsType | null,
   boardToUpdate: BoardType | null,
+  oldName: string | undefined,
 ): BoardsType | null => {
   if (!boardToUpdate || !boards) return boards;
 
-  const newBoards = { ...boards };
-  const indexToUpdate = newBoards.boards.findIndex(
-    (board) => board.name === boardToUpdate.name,
-  );
-  if (indexToUpdate !== -1) {
-    newBoards.boards[indexToUpdate] = boardToUpdate;
-  }
+  const newBoards = {
+    ...boards,
+    boards: boards.boards.map((board) =>
+      board.name === oldName ? boardToUpdate : board,
+    ),
+  };
+  console.log(newBoards, boardToUpdate);
 
   return newBoards;
 };
@@ -54,7 +55,10 @@ type Store = {
   addBoard: (boardToAdd: BoardType | null) => void;
   deleteBoard: (boardToDelete: BoardType | null) => void;
   setCurrentBoard: (board: BoardType | null) => void;
-  updateCurrentBoard: (board: BoardType | null) => void;
+  updateCurrentBoard: (
+    board: BoardType | null,
+    oldName: string | undefined,
+  ) => void;
   setBoards: (boards: BoardsType | null) => void;
 };
 
@@ -83,10 +87,10 @@ export const useStore = create<Store>((set) => ({
       ...state,
       currentBoard: board,
     })),
-  updateCurrentBoard: (board: BoardType | null) =>
+  updateCurrentBoard: (board: BoardType | null, oldName: string | undefined) =>
     set((state) => ({
       ...state,
-      boards: updateBoard(state.boards, board),
+      boards: updateBoard(state.boards, board, oldName),
     })),
   setBoards: (boards: BoardsType | null) =>
     set((state) => ({

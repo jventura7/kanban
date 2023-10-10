@@ -22,10 +22,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import CrossIcon from "@/public/assets/icon-cross.svg";
 import { useStore } from "@/util/store";
 import { BoardType } from "@/util/interfaces";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function EditBoard() {
   const { updateCurrentBoard, setCurrentBoard, currentBoard } = useStore();
+  const [open, setOpen] = useState(false);
 
   const columnSchema = z.object({
     name: z.string().min(1, {
@@ -58,8 +59,9 @@ export default function EditBoard() {
       name: values.name,
       columns: values.columns,
     };
-    updateCurrentBoard(newBoard);
+    updateCurrentBoard(newBoard, currentBoard?.name);
     setCurrentBoard(newBoard);
+    setOpen(false);
   };
 
   const addColumn = () => {
@@ -81,7 +83,7 @@ export default function EditBoard() {
   }, [currentBoard]);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="bg-nav-background mt-[52px] min-w-[300px] max-w-[300px] rounded-xl p-10 text-2xl font-bold opacity-40 transition duration-300 hover:text-primary-blue hover:opacity-100">
         + New Column
       </DialogTrigger>
