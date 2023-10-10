@@ -65,15 +65,16 @@ export default function Board({
   };
 
   const columns = getColumnsForBoard();
-  console.log(currentBoard);
   return (
     <>
-      {!currentBoard ? (
+      {currentBoard?.columns.length === 0 ? (
         <div className="mx-20 mt-60 text-center">
-          <h1 className="mb-6 text-xl font-bold">
-            This board is empty. Create a new column to get started
+          <h1 className="mb-6 text-2xl font-bold">
+            This board is empty. Create a new column to get started.
           </h1>
-          <Button className="transition duration-200">+ Add New Column</Button>
+          <Button className="rounded-full bg-primary-blue p-8 text-lg font-bold text-white transition duration-200 hover:opacity-80">
+            + Add New Column
+          </Button>
         </div>
       ) : (
         <div className="no-scrollbar flex max-h-[var(--main-height)] w-full space-x-8 overflow-scroll overflow-y-auto p-10">

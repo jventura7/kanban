@@ -24,7 +24,7 @@ import { useStore } from "@/util/store";
 import { BoardType } from "@/util/interfaces";
 
 export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
-  const store = useStore();
+  const { addBoard, setCurrentBoard } = useStore();
 
   const columnSchema = z.object({
     name: z.string().min(1, {
@@ -64,7 +64,8 @@ export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
       name: values.name,
       columns: values.columns,
     };
-    store.addBoard(newBoard);
+    addBoard(newBoard);
+    setCurrentBoard(newBoard);
   };
 
   const addColumn = () => {
@@ -155,7 +156,7 @@ export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
               className="rounded-full font-bold transition duration-200"
               type="submit"
             >
-              Submit
+              Create New Board
             </Button>
           </form>
         </Form>

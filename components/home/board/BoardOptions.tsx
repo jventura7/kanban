@@ -22,10 +22,10 @@ export default function BoardOptions({
   currentBoard: BoardType | null;
 }) {
   const [open, setOpen] = useState(false);
-  const store = useStore();
+  const { deleteBoard } = useStore();
 
   const handleDeleteBoard = () => {
-    store.deleteBoard(currentBoard);
+    deleteBoard(currentBoard);
     setOpen(false);
   };
 

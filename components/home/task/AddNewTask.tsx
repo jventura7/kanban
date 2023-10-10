@@ -21,7 +21,7 @@ export default function AddNewTask({
         + Add New Task
       </DialogTrigger>
       <DialogContent className="bg-nav-background w-96 p-8">
-        <DialogTitle className="dialog-content-header ">
+        <DialogTitle className="dialog-content-header">
           Add New Task
         </DialogTitle>
         <div className="flex flex-col space-y-12">

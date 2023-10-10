@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <main className="bg-main-background min-h-screen">
       <BoardHeader boards={store.boards} currentBoard={store.currentBoard} />
-      <div className="min-h-[var(--main-height)] md:grid md:grid-cols-[260px_minmax(900px,_1fr)]">
+      <div className="min-h-[var(--main-height)] md:grid md:grid-cols-[260px_minmax(200px,1fr)]">
         {/* Sidebar */}
         <SideBar boards={store.boards} currentBoard={store.currentBoard} />
         <Board currentBoard={store.currentBoard} />
