@@ -18,13 +18,13 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import * as z from "zod";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CrossIcon from "@/public/assets/icon-cross.svg";
 
 export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
-  const [columns, setColumns] = useState<string[]>(["Todo", "Done"]);
+  // const [columns, setColumns] = useState<string[]>(["Todo", "Done"]);
 
   const boardSchema = z.object({
     name: z.string().min(1, {
@@ -41,19 +41,21 @@ export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
     },
   });
 
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "columns",
+  });
+
   const onSubmit = (values: z.infer<typeof boardSchema>) => {
     console.log(values);
   };
 
   const addColumn = () => {
-    setColumns([...columns, ""]);
+    append({ value: "" });
   };
 
-  const removeColumn = (column: string) => {
-    console.log(columns);
-    const newColumns = columns.filter((c) => c != column);
-    console.log(newColumns);
-    setColumns(newColumns);
+  const removeColumn = (index: number) => {
+    remove(index);
   };
 
   return (
@@ -96,7 +98,7 @@ export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
               )}
             />
             <Label>Columns</Label>
-            {columns.map((column, index) => (
+            {/* {columns.map((column, index) => (
               <FormField
                 key={index}
                 control={form.control}
@@ -107,12 +109,11 @@ export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
                       <div className="flex space-x-4">
                         <Input
                           className="bg-nav-background border-primary-medium-grey"
-                          defaultValue={column}
                           {...field}
                         />
                         <Button
                           type="button"
-                          onClick={() => removeColumn(column)}
+                          onClick={() => removeColumn(index)}
                           className="bg-nav-background p-0"
                         >
                           <CrossIcon />
@@ -123,7 +124,35 @@ export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
                   </FormItem>
                 )}
               />
-            ))}
+            ))} */}
+            {fields.map((item, index) => {
+              return (
+                <FormField
+                  key={item.id}
+                  name={`columns.${index}.value`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <div className="flex space-x-4">
+                          <Input
+                            className="bg-nav-background border-primary-medium-grey"
+                            {...field}
+                          />
+                          <Button
+                            type="button"
+                            onClick={() => removeColumn(index)}
+                            className="bg-nav-background p-0"
+                          >
+                            <CrossIcon />
+                          </Button>
+                        </div>
+                      </FormControl>
+                      <FormMessage className="text-red-500" />
+                    </FormItem>
+                  )}
+                />
+              );
+            })}
             <Button
               type="button"
               onClick={addColumn}
