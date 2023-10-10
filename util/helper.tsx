@@ -19,7 +19,11 @@ export const renderAllBoards = (
           <DropdownMenuItem
             key={board.name + uniqueKey + "-button"}
             onClick={() => store.setCurrentBoard(board)}
-            className="hover:bg-item-hover cursor-pointer rounded-r-full p-4 text-lg font-bold hover:text-primary-blue"
+            className={`${
+              board.name === store.currentBoard?.name
+                ? "bg-primary-blue text-white"
+                : "bg-nav-background text-primary-medium-grey"
+            } hover:bg-item-hover cursor-pointer rounded-r-full p-4 text-lg font-bold hover:text-primary-blue`}
           >
             {board.name}
           </DropdownMenuItem>
@@ -29,7 +33,11 @@ export const renderAllBoards = (
           <Button
             key={board.name + uniqueKey + "-button"}
             onClick={() => store.setCurrentBoard(board)}
-            className="bg-nav-background hover:bg-item-hover flex w-full items-center justify-start rounded-r-full py-7 pl-6 text-lg font-bold text-primary-medium-grey hover:text-primary-blue hover:opacity-100"
+            className={`${
+              board.name === store.currentBoard?.name
+                ? "bg-primary-blue text-white"
+                : "bg-nav-background text-primary-medium-grey"
+            } hover:bg-item-hover flex w-full items-center justify-start rounded-r-full py-7 pl-6 text-lg font-bold hover:text-primary-blue hover:opacity-100`}
           >
             {board.name}
           </Button>

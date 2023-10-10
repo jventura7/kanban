@@ -35,7 +35,7 @@ export default function BoardOptions({
       <DropdownMenuTrigger>
         <Ellipsis />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mt-8 flex flex-col space-y-4 p-4">
+      <DropdownMenuContent className="bg-nav-background mr-4 mt-8 flex flex-col space-y-4 p-4">
         <Dialog>
           <DialogTrigger>Edit board</DialogTrigger>
           <DialogContent>

@@ -44,14 +44,14 @@ export default function BoardHeader({
               <h1 className="text-2xl font-bold">{currentBoard?.name}</h1>
               <ChevronDwon />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="ml-16 mt-10 w-[400px] md:hidden">
+            <DropdownMenuContent className="bg-nav-background ml-16 mt-10 w-[400px] md:hidden">
               <DropdownMenuLabel className="p-4 font-bold tracking-widest text-primary-medium-grey">
                 ALL BOARDS ({boards?.boards.length})
               </DropdownMenuLabel>
               {renderAllBoards(boards, true, "-header")}
               <DropdownMenuSeparator />
-              <div className="p-6">
-                <ThemeSwitch customWidth="80%" />
+              <div className="p-2">
+                <ThemeSwitch customWidth="100%" />
               </div>
             </DropdownMenuContent>
           </DropdownMenu>

@@ -17,7 +17,7 @@ export default function AddNewTask({
 }) {
   return (
     <Dialog>
-      <DialogTrigger className="rounded-full bg-primary-blue p-4 py-3 font-bold text-white transition duration-200 hover:opacity-80">
+      <DialogTrigger className="rounded-full bg-primary-blue p-4 py-3 font-bold text-white transition duration-200 hover:opacity-80 md:mr-4">
         + Add New Task
       </DialogTrigger>
       <DialogContent className="bg-nav-background w-96 p-8">
