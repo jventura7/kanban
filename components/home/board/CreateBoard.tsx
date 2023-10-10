@@ -8,7 +8,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -20,12 +19,17 @@ import { Button } from "@/components/ui/button";
 import * as z from "zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
 import CrossIcon from "@/public/assets/icon-cross.svg";
+import { useStore } from "@/util/store";
+import { BoardType } from "@/util/interfaces";
 
 export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
+  const store = useStore();
+
   const columnSchema = z.object({
-    value: z.string(),
+    name: z.string().min(1, {
+      message: "Column name cannot be empty",
+    }),
   });
 
   const boardSchema = z.object({
@@ -37,6 +41,17 @@ export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
 
   const form = useForm<z.infer<typeof boardSchema>>({
     resolver: zodResolver(boardSchema),
+    defaultValues: {
+      name: "",
+      columns: [
+        {
+          name: "Todo",
+        },
+        {
+          name: "Done",
+        },
+      ],
+    },
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -45,11 +60,15 @@ export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
   });
 
   const onSubmit = (values: z.infer<typeof boardSchema>) => {
-    console.log(values);
+    const newBoard: BoardType = {
+      name: values.name,
+      columns: values.columns,
+    };
+    store.addBoard(newBoard);
   };
 
   const addColumn = () => {
-    append({ value: "" });
+    append({ name: "" });
   };
 
   const removeColumn = (index: number) => {
@@ -101,7 +120,7 @@ export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
                 <FormField
                   key={item.id}
                   control={form.control}
-                  name={`columns.${index}.value`}
+                  name={`columns.${index}.name`}
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>

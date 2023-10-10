@@ -25,9 +25,9 @@ export default function Board({
         className="min-w-[300px] max-w-[300px]"
       >
         <h1 className="mb-8 text-sm font-bold tracking-wider text-primary-medium-grey">
-          {`${column.name} (${column.tasks.length})`}
+          {`${column.name} (${column.tasks ? column.tasks.length : 0})`}
         </h1>
-        {column.tasks.map((task) => (
+        {column.tasks?.map((task) => (
           <Task key={task.title} task={task} currentBoard={currentBoard} />
         ))}
       </div>

@@ -3,7 +3,7 @@ export interface BoardsType {
     name: string;
     columns: {
       name: string;
-      tasks: {
+      tasks?: {
         title: string;
         description: string;
         status: string;
@@ -20,7 +20,7 @@ export interface BoardType {
   name: string;
   columns: {
     name: string;
-    tasks: {
+    tasks?: {
       title: string;
       description: string;
       status: string;

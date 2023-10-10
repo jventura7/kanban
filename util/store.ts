@@ -3,12 +3,12 @@ import { BoardType, BoardsType } from "./interfaces";
 
 const addBoard = (
   boards: BoardsType | null,
-  newBoard: BoardType | null,
+  boardToAdd: BoardType | null,
 ): BoardsType | null => {
-  if (!newBoard || !boards) return boards;
+  if (!boardToAdd || !boards) return boards;
 
   const newBoards = { ...boards };
-  newBoards.boards.push(newBoard);
+  newBoards.boards.push(boardToAdd);
   return newBoards;
 };
 
@@ -33,8 +33,7 @@ const deleteBoard = (
 type Store = {
   boards: BoardsType | null;
   currentBoard: BoardType | null;
-  newBoard: BoardType | null;
-  addBoard: () => void;
+  addBoard: (boardToAdd: BoardType | null) => void;
   deleteBoard: (boardToDelete: BoardType | null) => void;
   setCurrentBoard: (board: BoardType | null) => void;
   setBoards: (boards: BoardsType | null) => void;
@@ -42,12 +41,11 @@ type Store = {
 
 export const useStore = create<Store>((set) => ({
   boards: null,
-  newBoard: null,
   currentBoard: null,
-  addBoard: () =>
+  addBoard: (boardToAdd: BoardType | null) =>
     set((state) => ({
       ...state,
-      boards: addBoard(state.boards, state.newBoard),
+      boards: addBoard(state.boards, boardToAdd),
     })),
   deleteBoard: (boardToDelete: BoardType | null) =>
     set((state) => {
