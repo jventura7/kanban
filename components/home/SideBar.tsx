@@ -1,16 +1,12 @@
 import HideIcon from "@/public/assets/icon-hide-sidebar.svg";
-import { BoardsType, BoardType } from "@/util/interfaces";
 import { renderAllBoards } from "@/util/helper";
 import ThemeSwitch from "./ThemeSwitch";
 import { Button } from "../ui/button";
+import { useStore } from "@/util/store";
 
-export default function SideBar({
-  boards,
-  currentBoard,
-}: {
-  boards: BoardsType | null;
-  currentBoard: BoardType | null;
-}) {
+export default function SideBar() {
+  const { boards } = useStore();
+
   return (
     <div className="bg-nav-background hidden md:flex md:flex-col md:justify-between">
       <div>
@@ -18,7 +14,7 @@ export default function SideBar({
           {" "}
           ALL BOARDS ({boards?.boards.length})
         </h1>
-        {renderAllBoards(boards, false, "-sidebar")}
+        {renderAllBoards(false, "-sidebar")}
       </div>
       <div>
         <div className="p-6">

@@ -120,4 +120,8 @@
   .dialog-content-header {
     @apply mb-4 text-xl font-bold;
   }
+
+  .dialog-vertical-spacing {
+    @apply space-y-6;
+  }
 }

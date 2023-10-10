@@ -22,9 +22,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import CrossIcon from "@/public/assets/icon-cross.svg";
 import { useStore } from "@/util/store";
 import { BoardType } from "@/util/interfaces";
+import { useEffect } from "react";
 
-export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
-  const { addBoard, setCurrentBoard } = useStore();
+export default function EditBoard() {
+  const { updateCurrentBoard, setCurrentBoard, currentBoard } = useStore();
 
   const columnSchema = z.object({
     name: z.string().min(1, {
@@ -43,14 +44,7 @@ export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
     resolver: zodResolver(boardSchema),
     defaultValues: {
       name: "",
-      columns: [
-        {
-          name: "Todo",
-        },
-        {
-          name: "Done",
-        },
-      ],
+      columns: [],
     },
   });
 
@@ -64,7 +58,7 @@ export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
       name: values.name,
       columns: values.columns,
     };
-    addBoard(newBoard);
+    updateCurrentBoard(newBoard);
     setCurrentBoard(newBoard);
   };
 
@@ -76,22 +70,24 @@ export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
     remove(index);
   };
 
+  // Update default values when currentBoard changes
+  useEffect(() => {
+    if (currentBoard) {
+      form.reset({
+        name: currentBoard.name,
+        columns: currentBoard.columns.map((column) => ({ name: column.name })),
+      });
+    }
+  }, [currentBoard]);
+
   return (
     <Dialog>
-      <div className="mb-2 w-full pr-8">
-        <DialogTrigger
-          className={`${
-            !asMenuItem ? "bg-nav-background pl-6" : ""
-          } hover:bg-item-hover flex w-full items-center justify-start rounded-r-full p-4 text-lg font-bold text-primary-blue hover:text-primary-blue hover:opacity-100`}
-        >
-          Create New Board
-        </DialogTrigger>
-      </div>
-      <DialogContent className="bg-nav-background w-96 p-8">
+      <DialogTrigger className="bg-nav-background mt-[52px] min-w-[300px] max-w-[300px] rounded-xl p-10 text-2xl font-bold opacity-40 transition duration-300 hover:text-primary-blue hover:opacity-100">
+        + New Column
+      </DialogTrigger>
+      <DialogContent className="bg-nav-background dialog-vertical-spacing">
         <DialogHeader>
-          <DialogTitle className="dialog-content-header flex items-center justify-between">
-            Add a new board
-          </DialogTitle>
+          <DialogTitle>Edit Board</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -158,7 +154,7 @@ export default function CreateBoard({ asMenuItem }: { asMenuItem: boolean }) {
               className="rounded-full p-6 font-bold transition duration-200"
               type="submit"
             >
-              Create New Board
+              Save Changes
             </Button>
           </form>
         </Form>

@@ -9,6 +9,7 @@ const addBoard = (
 
   const newBoards = { ...boards };
   newBoards.boards.push(boardToAdd);
+
   return newBoards;
 };
 
@@ -30,12 +31,30 @@ const deleteBoard = (
   };
 };
 
+const updateBoard = (
+  boards: BoardsType | null,
+  boardToUpdate: BoardType | null,
+): BoardsType | null => {
+  if (!boardToUpdate || !boards) return boards;
+
+  const newBoards = { ...boards };
+  const indexToUpdate = newBoards.boards.findIndex(
+    (board) => board.name === boardToUpdate.name,
+  );
+  if (indexToUpdate !== -1) {
+    newBoards.boards[indexToUpdate] = boardToUpdate;
+  }
+
+  return newBoards;
+};
+
 type Store = {
   boards: BoardsType | null;
   currentBoard: BoardType | null;
   addBoard: (boardToAdd: BoardType | null) => void;
   deleteBoard: (boardToDelete: BoardType | null) => void;
   setCurrentBoard: (board: BoardType | null) => void;
+  updateCurrentBoard: (board: BoardType | null) => void;
   setBoards: (boards: BoardsType | null) => void;
 };
 
@@ -63,6 +82,11 @@ export const useStore = create<Store>((set) => ({
     set((state) => ({
       ...state,
       currentBoard: board,
+    })),
+  updateCurrentBoard: (board: BoardType | null) =>
+    set((state) => ({
+      ...state,
+      boards: updateBoard(state.boards, board),
     })),
   setBoards: (boards: BoardsType | null) =>
     set((state) => ({

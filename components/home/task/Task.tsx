@@ -15,14 +15,10 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import TaskOptions from "./TaskOptions";
+import { useStore } from "@/util/store";
 
-export default function Task({
-  task,
-  currentBoard,
-}: {
-  task: TaskType;
-  currentBoard: BoardType;
-}) {
+export default function Task({ task }: { task: TaskType }) {
+  const { currentBoard } = useStore();
   const subTasksComplete = task.subtasks.reduce(
     (acc, complete) => (!complete ? acc + 1 : acc),
     0,
@@ -66,11 +62,11 @@ export default function Task({
 
   return (
     <Dialog>
-      <DialogTrigger className="bg-nav-background group mb-6 w-72 cursor-pointer rounded-lg p-4 text-left">
+      <DialogTrigger className="bg-nav-background group mb-6 w-72 cursor-pointer rounded-lg p-6 text-left">
         <h1 className="mb-2 font-bold group-hover:text-primary-blue">
           {task.title}
         </h1>
-        <h2>
+        <h2 className="font-semibold text-primary-medium-grey">
           {subTasksComplete} of {task.subtasks.length} subtasks
         </h2>
       </DialogTrigger>

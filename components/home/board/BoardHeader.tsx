@@ -3,7 +3,6 @@ import MobileIcon from "@/public/assets/logo-mobile.svg";
 import DesktopDarkIcon from "@/public/assets/logo-light.svg";
 import DesktopLightIcon from "@/public/assets/logo-dark.svg";
 import ChevronDwon from "@/public/assets/icon-chevron-down.svg";
-import Ellipsis from "@/public/assets/icon-vertical-ellipsis.svg";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,20 +11,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
-import { BoardsType, BoardType } from "@/util/interfaces";
 import { renderAllBoards } from "@/util/helper";
 import ThemeSwitch from "../ThemeSwitch";
 import AddNewTask from "../task/AddNewTask";
 import BoardOptions from "./BoardOptions";
+import { useStore } from "@/util/store";
 
-export default function BoardHeader({
-  boards,
-  currentBoard,
-}: {
-  boards: BoardsType | null;
-  currentBoard: BoardType | null;
-}) {
+export default function BoardHeader() {
   const { theme } = useTheme();
+  const { boards, currentBoard } = useStore();
 
   return (
     <nav className="bg-nav-background box-border flex max-h-[var(--header-height)] min-h-[var(--header-height)] justify-between p-6">
@@ -48,7 +42,7 @@ export default function BoardHeader({
               <DropdownMenuLabel className="p-4 font-bold tracking-widest text-primary-medium-grey">
                 ALL BOARDS ({boards?.boards.length})
               </DropdownMenuLabel>
-              {renderAllBoards(boards, true, "-header")}
+              {renderAllBoards(true, "-header")}
               <DropdownMenuSeparator />
               <div className="p-2">
                 <ThemeSwitch customWidth="100%" />
@@ -59,8 +53,8 @@ export default function BoardHeader({
       </div>
       {/* Button container */}
       <div className="flex items-center space-x-4">
-        <AddNewTask currentBoard={currentBoard} />
-        <BoardOptions currentBoard={currentBoard} />
+        <AddNewTask />
+        <BoardOptions />
       </div>
     </nav>
   );

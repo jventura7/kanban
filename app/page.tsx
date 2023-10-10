@@ -7,19 +7,19 @@ import Board from "@/components/home/board/Board";
 import { useStore } from "@/util/store";
 
 export default function Home() {
-  const store = useStore();
+  const { setBoards, boards, currentBoard } = useStore();
 
   useEffect(() => {
-    store.setBoards(BoardData);
+    setBoards(BoardData);
   }, []);
 
   return (
     <main className="bg-main-background min-h-screen">
-      <BoardHeader boards={store.boards} currentBoard={store.currentBoard} />
+      <BoardHeader boards={boards} currentBoard={currentBoard} />
       <div className="min-h-[var(--main-height)] md:grid md:grid-cols-[260px_minmax(200px,1fr)]">
         {/* Sidebar */}
-        <SideBar boards={store.boards} currentBoard={store.currentBoard} />
-        <Board currentBoard={store.currentBoard} />
+        <SideBar boards={boards} currentBoard={currentBoard} />
+        <Board currentBoard={currentBoard} />
       </div>
     </main>
   );

@@ -8,13 +8,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { BoardType } from "@/util/interfaces";
+import { useStore } from "@/util/store";
 
-export default function AddNewTask({
-  currentBoard,
-}: {
-  currentBoard: BoardType | null;
-}) {
+export default function AddNewTask() {
+  const { currentBoard } = useStore();
+
   return (
     <Dialog>
       <DialogTrigger className="rounded-full bg-primary-blue p-4 py-3 font-bold text-white transition duration-200 hover:opacity-80 md:mr-4">
@@ -24,7 +22,7 @@ export default function AddNewTask({
         <DialogTitle className="dialog-content-header">
           Add New Task
         </DialogTitle>
-        <div className="flex flex-col space-y-12">
+        <div className="dialog-vertical-spacing flex flex-col">
           <div>
             <Label htmlFor="task-name">Task Name</Label>
             <Input
@@ -45,7 +43,7 @@ export default function AddNewTask({
           </div>
           <div className="flex flex-col">
             <Label className="mb-3">Subtasks</Label>
-            <Button className="rounded-full bg-[var(--item-hover)] font-bold text-primary-blue transition duration-200">
+            <Button className="rounded-full bg-[var(--item-hover)] p-6 font-bold text-primary-blue transition duration-200">
               + Add New Subtask
             </Button>
           </div>

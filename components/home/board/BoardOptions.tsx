@@ -12,17 +12,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Ellipsis from "@/public/assets/icon-vertical-ellipsis.svg";
-import { BoardType, TaskType } from "@/util/interfaces";
 import { useStore } from "@/util/store";
 import { useState } from "react";
 
-export default function BoardOptions({
-  currentBoard,
-}: {
-  currentBoard: BoardType | null;
-}) {
+export default function BoardOptions() {
   const [open, setOpen] = useState(false);
-  const { deleteBoard } = useStore();
+  const { deleteBoard, currentBoard } = useStore();
 
   const handleDeleteBoard = () => {
     deleteBoard(currentBoard);
