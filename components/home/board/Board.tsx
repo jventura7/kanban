@@ -26,7 +26,7 @@ export default function Board() {
 
     columns.push(
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger className="bg-nav-background mt-[52px] min-w-[300px] max-w-[300px] rounded-xl p-10 text-2xl font-bold opacity-40 transition duration-300 hover:text-primary-blue hover:opacity-100">
+        <DialogTrigger className="mt-[52px] min-w-[300px] max-w-[300px] rounded-xl bg-nav-background p-10 text-2xl font-bold opacity-40 transition duration-300 hover:text-primary-blue hover:opacity-100">
           + New Column
         </DialogTrigger>
         <EditBoard setOpenEdit={setOpen} />
@@ -37,7 +37,7 @@ export default function Board() {
 
   return (
     <>
-      {currentBoard?.columns.length === 0 ? (
+      {currentBoard?.columns?.length === 0 ? (
         <div className="mx-20 mt-60 text-center">
           <h1 className="mb-6 text-2xl font-bold">
             This board is empty. Create a new column to get started.

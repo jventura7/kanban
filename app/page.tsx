@@ -14,12 +14,12 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="bg-main-background min-h-screen">
-      <BoardHeader boards={boards} currentBoard={currentBoard} />
-      <div className="min-h-[var(--main-height)] md:grid md:grid-cols-[260px_minmax(200px,1fr)]">
+    <main className="min-h-screen bg-main-background">
+      <BoardHeader />
+      <div className="min-h-[var(--main-height)] md:grid md:grid-cols-[290px_minmax(200px,1fr)]">
         {/* Sidebar */}
-        <SideBar boards={boards} currentBoard={currentBoard} />
-        <Board currentBoard={currentBoard} />
+        <SideBar />
+        <Board />
       </div>
     </main>
   );
