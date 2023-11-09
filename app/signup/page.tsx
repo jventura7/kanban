@@ -11,11 +11,11 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { useState } from "react";
 
 const formSchema = z.object({
   username: z.string().min(3, {
@@ -24,21 +24,56 @@ const formSchema = z.object({
   password: z.string().min(8, {
     message: "Password must be at least 8 characters long",
   }),
+  email: z.string().email({
+    message: "Please enter a valid email address",
+  }),
 });
+
+enum FieldError {
+  USERNAME,
+  EMAIL,
+}
 
 export default function Page() {
   const { theme } = useTheme();
+  const [uniqueError, setUniqeError] = useState<FieldError | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
       password: "",
+      email: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const res = await fetch("http://localhost:3000/auth/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        // Validation Error
+        if (res.status === 400) {
+          const target: String | undefined = data.error.meta?.target?.[0];
+          setUniqeError(
+            target === "username" ? FieldError.USERNAME : FieldError.EMAIL,
+          );
+          setTimeout(() => {
+            setUniqeError(null);
+          }, 3000);
+        }
+        throw new Error("Invalid credentials");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -66,7 +101,32 @@ export default function Page() {
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage>
+                    {uniqueError === FieldError.USERNAME ? (
+                      <h1>Username already in use</h1>
+                    ) : null}
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      className="rounded-none border-0 border-b-2 bg-nav-background p-0 transition duration-300 focus:border-foreground"
+                      placeholder="Email"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage>
+                    {" "}
+                    {uniqueError === FieldError.EMAIL ? (
+                      <h1>Email already in use</h1>
+                    ) : null}
+                  </FormMessage>
                 </FormItem>
               )}
             />
@@ -90,13 +150,13 @@ export default function Page() {
           </div>
           <div>
             <Button className="w-full transition duration-300" type="submit">
-              Login
+              Sign up
             </Button>
             <p className="mt-4 text-sm text-foreground">
-              Don't have an account?{" "}
+              Already have an account?{" "}
               <span>
-                <Link className="font-bold text-primary-blue" href="/signup">
-                  Sign up
+                <Link className="font-bold text-primary-blue" href="/login">
+                  Log in
                 </Link>
               </span>
             </p>

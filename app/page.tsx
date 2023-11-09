@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Board from "@/components/home/board/Board";
 import { useStore } from "@/util/store";
 
-export default function Home() {
+export default function Page() {
   const { setBoards, boards, currentBoard } = useStore();
 
   useEffect(() => {
