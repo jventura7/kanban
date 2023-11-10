@@ -16,6 +16,8 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import AuthenticatedRoute from "@/components/auth/AuthenticatedRoute";
 
 const formSchema = z.object({
   username: z.string().min(3, {
@@ -36,6 +38,7 @@ enum FieldError {
 
 export default function Page() {
   const { theme } = useTheme();
+  const router = useRouter();
   const [uniqueError, setUniqeError] = useState<FieldError | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -71,98 +74,102 @@ export default function Page() {
         }
         throw new Error("Invalid credentials");
       }
+      localStorage.setItem("token", data.token);
+      router.push("/");
     } catch (err) {
       console.log(err);
     }
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-main-background">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="h-fit w-[26rem] space-y-14 rounded-2xl bg-nav-background p-12"
-        >
-          {theme === "light" ? (
-            <DesktopLightIcon className="m-auto" />
-          ) : (
-            <DesktopDarkIcon className="m-auto" />
-          )}
-          <div className="space-y-8">
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      className="rounded-none border-0 border-b-2 bg-nav-background p-0 transition duration-300 focus:border-foreground"
-                      placeholder="Username"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage>
-                    {uniqueError === FieldError.USERNAME ? (
-                      <h1>Username already in use</h1>
-                    ) : null}
-                  </FormMessage>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      className="rounded-none border-0 border-b-2 bg-nav-background p-0 transition duration-300 focus:border-foreground"
-                      placeholder="Email"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage>
-                    {" "}
-                    {uniqueError === FieldError.EMAIL ? (
-                      <h1>Email already in use</h1>
-                    ) : null}
-                  </FormMessage>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      className="rounded-none border-0 border-b-2 bg-nav-background p-0 transition duration-300 focus:border-foreground"
-                      placeholder="Password"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div>
-            <Button className="w-full transition duration-300" type="submit">
-              Sign up
-            </Button>
-            <p className="mt-4 text-sm text-foreground">
-              Already have an account?{" "}
-              <span>
-                <Link className="font-bold text-primary-blue" href="/login">
-                  Log in
-                </Link>
-              </span>
-            </p>
-          </div>
-        </form>
-      </Form>
-    </main>
+    <AuthenticatedRoute>
+      <main className="flex min-h-screen items-center justify-center bg-main-background">
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="h-fit w-[26rem] space-y-14 rounded-2xl bg-nav-background p-12"
+          >
+            {theme === "light" ? (
+              <DesktopLightIcon className="m-auto" />
+            ) : (
+              <DesktopDarkIcon className="m-auto" />
+            )}
+            <div className="space-y-8">
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        className="rounded-none border-0 border-b-2 bg-nav-background p-0 transition duration-300 focus:border-foreground"
+                        placeholder="Username"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage>
+                      {uniqueError === FieldError.USERNAME ? (
+                        <h1>Username already in use</h1>
+                      ) : null}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        className="rounded-none border-0 border-b-2 bg-nav-background p-0 transition duration-300 focus:border-foreground"
+                        placeholder="Email"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage>
+                      {" "}
+                      {uniqueError === FieldError.EMAIL ? (
+                        <h1>Email already in use</h1>
+                      ) : null}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        className="rounded-none border-0 border-b-2 bg-nav-background p-0 transition duration-300 focus:border-foreground"
+                        placeholder="Password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div>
+              <Button className="w-full transition duration-300" type="submit">
+                Sign up
+              </Button>
+              <p className="mt-4 text-sm text-foreground">
+                Already have an account?{" "}
+                <span>
+                  <Link className="font-bold text-primary-blue" href="/login">
+                    Log in
+                  </Link>
+                </span>
+              </p>
+            </div>
+          </form>
+        </Form>
+      </main>
+    </AuthenticatedRoute>
   );
 }

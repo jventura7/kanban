@@ -5,6 +5,7 @@ import BoardData from "@/data.json";
 import { useEffect, useState } from "react";
 import Board from "@/components/home/board/Board";
 import { useStore } from "@/util/store";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
 
 export default function Page() {
   const { setBoards, boards, currentBoard } = useStore();
@@ -14,13 +15,15 @@ export default function Page() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-main-background">
-      <BoardHeader />
-      <div className="min-h-[var(--main-height)] md:grid md:grid-cols-[290px_minmax(200px,1fr)]">
-        {/* Sidebar */}
-        <SideBar />
-        <Board />
-      </div>
-    </main>
+    <ProtectedRoute>
+      <main className="min-h-screen bg-main-background">
+        <BoardHeader />
+        <div className="min-h-[var(--main-height)] md:grid md:grid-cols-[290px_minmax(200px,1fr)]">
+          {/* Sidebar */}
+          <SideBar />
+          <Board />
+        </div>
+      </main>
+    </ProtectedRoute>
   );
 }
