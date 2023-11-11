@@ -52,17 +52,20 @@ export default function Page() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const res = await fetch("http://localhost:3000/auth/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
         },
-        body: JSON.stringify(values),
-      });
+      );
       const data = await res.json();
-
+      console.log(data);
       if (!res.ok) {
-        // Validation Error
         if (res.status === 400) {
           const target: String | undefined = data.error.meta?.target?.[0];
           setUniqeError(
@@ -74,7 +77,6 @@ export default function Page() {
         }
         throw new Error("Invalid credentials");
       }
-      localStorage.setItem("token", data.token);
       router.push("/");
     } catch (err) {
       console.log(err);

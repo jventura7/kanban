@@ -41,18 +41,16 @@ export default function Page() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const res = await fetch("http://localhost:3000/auth/login", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
       });
-      const data = await res.json();
       if (!res.ok) {
         throw new Error("Something went wrong");
       }
-      localStorage.setItem("token", data.token);
       router.push("/");
     } catch (err) {
       console.log(err);
