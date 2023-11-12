@@ -41,3 +41,8 @@ export interface TaskType {
     isCompleted: boolean;
   }[];
 }
+
+export type UserType = {
+  username: string;
+  id: string;
+};

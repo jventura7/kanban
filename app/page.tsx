@@ -8,10 +8,10 @@ import { useStore } from "@/util/store";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 
 export default function Page() {
-  const { setBoards, boards, currentBoard } = useStore();
+  const { getBoards, boards } = useStore();
 
   useEffect(() => {
-    setBoards(BoardData);
+    getBoards();
   }, []);
 
   return (

@@ -1,16 +1,46 @@
 import { create } from "zustand";
 import { BoardType, BoardsType } from "./interfaces";
+import { UserType } from "./interfaces";
 
-const addBoard = (
-  boards: BoardsType | null,
+const getBoards = async (): Promise<BoardsType | null> => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/board`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+const addBoardAndUpdate = async (
   boardToAdd: BoardType | null,
-): BoardsType | null => {
-  if (!boardToAdd || !boards) return boards;
+): Promise<BoardsType | null> => {
+  try {
+    if (!boardToAdd) return null;
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/board`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: boardToAdd.name,
+        columns: boardToAdd.columns,
+      }),
+    });
 
-  const newBoards = { ...boards };
-  newBoards.boards.push(boardToAdd);
-
-  return newBoards;
+    const data = await getBoards();
+    if (!data) return null;
+    return data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
 };
 
 const deleteBoard = (
@@ -49,8 +79,10 @@ const updateBoard = (
 };
 
 type Store = {
+  user: UserType | null;
   boards: BoardsType | null;
   currentBoard: BoardType | null;
+  getBoards: () => void;
   addBoard: (boardToAdd: BoardType | null) => void;
   deleteBoard: (boardToDelete: BoardType | null) => void;
   setCurrentBoard: (board: BoardType | null) => void;
@@ -59,16 +91,27 @@ type Store = {
     oldName: string | undefined,
   ) => void;
   setBoards: (boards: BoardsType | null) => void;
+  setUser: (user: UserType | null) => void;
 };
 
 export const useStore = create<Store>((set) => ({
+  user: null,
   boards: null,
   currentBoard: null,
-  addBoard: (boardToAdd: BoardType | null) =>
+  getBoards: async () => {
+    const boards = await getBoards();
     set((state) => ({
       ...state,
-      boards: addBoard(state.boards, boardToAdd),
-    })),
+      boards: boards,
+    }));
+  },
+  addBoard: async (boardToAdd: BoardType | null) => {
+    const updatedBoards = await addBoardAndUpdate(boardToAdd);
+    set((state) => ({
+      ...state,
+      boards: updatedBoards,
+    }));
+  },
   deleteBoard: (boardToDelete: BoardType | null) =>
     set((state) => {
       const { success, updatedBoards } = deleteBoard(
@@ -96,5 +139,10 @@ export const useStore = create<Store>((set) => ({
       ...state,
       boards: boards,
       currentBoard: boards?.boards[0],
+    })),
+  setUser: (user: UserType | null) =>
+    set((state) => ({
+      ...state,
+      user: user,
     })),
 }));

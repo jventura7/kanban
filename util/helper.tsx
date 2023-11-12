@@ -9,7 +9,7 @@ export const renderAllBoards = (asMenuItem: boolean, uniqueKey: string) => {
   const renderBoards = () => {
     if (!boards) return [];
 
-    const boardRenders = boards.boards.map((board) =>
+    const boardRenders = boards?.boards?.map((board) =>
       asMenuItem ? (
         <div key={board.name + uniqueKey} className="mb-2 w-full pr-8">
           <DropdownMenuItem
@@ -41,7 +41,7 @@ export const renderAllBoards = (asMenuItem: boolean, uniqueKey: string) => {
       ),
     );
 
-    boardRenders.push(<CreateBoard asMenuItem={asMenuItem} />);
+    boardRenders?.push(<CreateBoard asMenuItem={asMenuItem} />);
     return boardRenders;
   };
 

@@ -40,7 +40,7 @@ export default function BoardHeader() {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="ml-16 mt-10 w-[400px] bg-nav-background md:hidden">
               <DropdownMenuLabel className="p-4 font-bold tracking-widest text-primary-medium-grey">
-                ALL BOARDS ({boards?.boards.length})
+                ALL BOARDS ({boards?.boards?.length})
               </DropdownMenuLabel>
               {renderAllBoards(true, "-header")}
               <DropdownMenuSeparator />
